@@ -99,6 +99,9 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 
 /**
  * @author Clinton Begin
+ *
+ * Configuration 对象保存了Mybatis的所有配置信息
+ *
  */
 public class Configuration {
 
@@ -150,12 +153,16 @@ public class Configuration {
    */
   protected Class<?> configurationFactory;
 
+  //存储 Mapper接口和 对应XML文件 的映射关系
   protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
+
+  //Mybatis的拦截器链
   protected final InterceptorChain interceptorChain = new InterceptorChain();
   protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry(this);
   protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
   protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
 
+  //这个存储 Mapper的方法 和 XML中的 Statement 语句的映射关系
   protected final Map<String, MappedStatement> mappedStatements = new StrictMap<MappedStatement>(
       "Mapped Statements collection")
           .conflictMessageProducer((savedValue, targetValue) -> ". please check " + savedValue.getResource() + " and "

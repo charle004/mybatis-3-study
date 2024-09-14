@@ -29,6 +29,10 @@ import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 
 /**
  * @author Clinton Begin
+ * 针对具体对象的封装
+ * 用于实现
+ *    1.
+ *
  */
 public class MetaObject {
 

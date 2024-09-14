@@ -23,6 +23,8 @@ import org.apache.ibatis.cache.CacheException;
 
 /**
  * @author Clinton Begin
+ * Mybatis缓存的具体实现
+ * 永久式缓存 即不手动调用remove和clear缓存不会删除
  */
 public class PerpetualCache implements Cache {
 

@@ -43,6 +43,10 @@ import org.xml.sax.SAXParseException;
 /**
  * @author Clinton Begin
  * @author Kazuki Shimizu
+ *
+ *
+ * Mybatis采用了  SAX（Simple API for XML） 的方式解析 XML配置
+ *
  */
 public class XPathParser {
 

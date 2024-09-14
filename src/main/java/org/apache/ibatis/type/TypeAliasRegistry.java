@@ -34,6 +34,11 @@ import org.apache.ibatis.io.Resources;
 
 /**
  * @author Clinton Begin
+ *
+ * 类型别名注册器
+ * 维护一个 HashMap 来保存 别名和指定类型的映射关系
+ * Mybatis 内置了很多常用的别名，如：string 对应 String.class  、int对应 Integer.class 等
+ *
  */
 public class TypeAliasRegistry {
 

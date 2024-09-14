@@ -34,16 +34,24 @@ import org.apache.ibatis.logging.LogFactory;
  *
  * @author Clinton Begin
  * @author Eduardo Macarron
+ *
+ * 事务缓存 即Mybatis二级缓存使用到的
+ *
+ *
  */
 public class TransactionalCache implements Cache {
 
   private static final Log log = LogFactory.getLog(TransactionalCache.class);
 
+  //具体的缓存
   private final Cache delegate;
   private boolean clearOnCommit;
+
+  //存放待事务提交后 加入缓存的值
   private final Map<Object, Object> entriesToAddOnCommit;
   private final Set<Object> entriesMissedInCache;
 
+  //具体的缓存实现通过构造器传入，可由XML中的 cache标签 配置
   public TransactionalCache(Cache delegate) {
     this.delegate = delegate;
     this.clearOnCommit = false;
@@ -77,6 +85,7 @@ public class TransactionalCache implements Cache {
 
   @Override
   public void putObject(Object key, Object object) {
+    //这里不是真正的将数据放入缓存，而是存在中间临时的Map
     entriesToAddOnCommit.put(key, object);
   }
 
@@ -95,6 +104,7 @@ public class TransactionalCache implements Cache {
     if (clearOnCommit) {
       delegate.clear();
     }
+    //当提交事务时，将中间临时Map的数据写入缓存
     flushPendingEntries();
     reset();
   }

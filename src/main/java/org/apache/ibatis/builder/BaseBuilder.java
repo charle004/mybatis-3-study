@@ -30,6 +30,8 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 
 /**
  * @author Clinton Begin
+ * 基础的配置构建类
+ *
  */
 public abstract class BaseBuilder {
   protected final Configuration configuration;

@@ -28,6 +28,11 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 /**
  * Builds {@link SqlSession} instances.
  *
+ * SqlSessionFactoryBuilder 用于构建 SqlSessionFactory对象
+ * 方式主要有两种：
+ * 1. 读取Mybatis XML配置构建 Configuration 对象后创建 SqlSessionFactory对象
+ * 2. 编码直接创建Configuration对象后创建 SqlSessionFactory对象
+ *
  * @author Clinton Begin
  */
 public class SqlSessionFactoryBuilder {

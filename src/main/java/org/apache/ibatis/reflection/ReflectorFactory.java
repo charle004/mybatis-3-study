@@ -15,6 +15,11 @@
  */
 package org.apache.ibatis.reflection;
 
+
+/**
+ * 元信息工厂
+ * 用于根据 Class对象找到 元信息的Reflector对象
+ */
 public interface ReflectorFactory {
 
   boolean isClassCacheEnabled();

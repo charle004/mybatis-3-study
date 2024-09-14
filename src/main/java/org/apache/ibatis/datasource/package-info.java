@@ -15,5 +15,10 @@
  */
 /**
  * Base package for Datasources.
+ * Mybatis内置了3种数据源方式
+ * 1. jndi
+ * 2. pooled 池化连接
+ * 3. unplooled 非池化连接
+ *
  */
 package org.apache.ibatis.datasource;

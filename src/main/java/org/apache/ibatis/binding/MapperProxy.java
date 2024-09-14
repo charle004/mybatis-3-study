@@ -33,6 +33,10 @@ import org.apache.ibatis.util.MapUtil;
 /**
  * @author Clinton Begin
  * @author Eduardo Macarron
+ *
+ * 博客原话（https://blog.csdn.net/weixin_43934607/article/details/114156660）：
+ *  引入MapperProxy 是为了解决硬编码和编译时检查问题。它需要做的事情是：根据方法查找Statement ID
+ *
  */
 public class MapperProxy<T> implements InvocationHandler, Serializable {
 

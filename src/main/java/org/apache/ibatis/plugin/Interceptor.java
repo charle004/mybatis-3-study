@@ -19,11 +19,17 @@ import java.util.Properties;
 
 /**
  * @author Clinton Begin
+ *
+ * Mybatis的插件接口 本质是个拦截器
+ *
+ *
  */
 public interface Interceptor {
 
   Object intercept(Invocation invocation) throws Throwable;
 
+  //
+  // target 即 需要被代理的对象（Executor / ParameterHandler / ResultSetHandler / StatementHandler 四大对象之一 ）
   default Object plugin(Object target) {
     return Plugin.wrap(target, this);
   }

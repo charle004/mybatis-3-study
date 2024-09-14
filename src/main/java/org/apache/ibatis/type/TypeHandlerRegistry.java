@@ -51,12 +51,22 @@ import org.apache.ibatis.session.Configuration;
 /**
  * @author Clinton Begin
  * @author Kazuki Shimizu
+ *
+ * TypeHandler 注册类
+ * 用于快速根据 JdbcType / JavaType / TypeHandler的Class 获取 TypeHandler对象
+ *
  */
 public final class TypeHandlerRegistry {
 
+  // JdbcType -> TypeHandler  用于根据JdbcType获取 TypeHandler
   private final Map<JdbcType, TypeHandler<?>> jdbcTypeHandlerMap = new EnumMap<>(JdbcType.class);
+
+  // JavaType -> TypeHandler  用于根据 JavaType 获取 TypeHandler
   private final Map<Type, Map<JdbcType, TypeHandler<?>>> typeHandlerMap = new ConcurrentHashMap<>();
+
   private final TypeHandler<Object> unknownTypeHandler;
+
+  //所有的 TypeHandler ， 用于根据 TypeHandler的 Class获取指定的TypeHandler
   private final Map<Class<?>, TypeHandler<?>> allTypeHandlersMap = new HashMap<>();
 
   private static final Map<JdbcType, TypeHandler<?>> NULL_TYPE_HANDLER_MAP = Collections.emptyMap();

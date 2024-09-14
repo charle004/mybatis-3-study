@@ -15,5 +15,10 @@
  */
 /**
  * Tools for getting/setting properties.
+ * get / set 属性的工具方法：
+ * 包括：
+ * 1. 属性的复制
+ * 2. 属性名称的转换；判断方法是否是get/set方法，方法名转属性名
+ * 3. 属性名称的分词，属性全名转属性名
  */
 package org.apache.ibatis.reflection.property;

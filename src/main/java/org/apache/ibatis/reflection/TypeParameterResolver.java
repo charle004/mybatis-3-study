@@ -27,6 +27,13 @@ import java.util.Arrays;
 
 /**
  * @author Iwao AVE!
+ * 用于解析 成员变量的类型、方法的返回类型、方法的参数类型
+ * 涉及
+ *    1. 泛型变量，如： <T> 中的 T 泛型类型
+ *    2. 泛型类型，如 List<String>
+ *    3. 数组类型，如 String[]
+ *    4. 普通原始类型
+ *
  */
 public class TypeParameterResolver {
 

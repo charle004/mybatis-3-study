@@ -94,19 +94,26 @@ public class CachingExecutor implements Executor {
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler,
       CacheKey key, BoundSql boundSql) throws SQLException {
     Cache cache = ms.getCache();
+    //尝试获取当前 Mapper Statement中的缓存对象（由xml中 cache标签配置 ）
+    //说明 这里的缓存是 Mapper级别的，即nameSpace级别的，即每一个缓存和一个Mapper对应 （也可多个Mapper配置共享同一个缓存）
     if (cache != null) {
+      //判断是否存在清空缓存 由 xml中的 flushCache 属性控制，配置true后当前SQL执行之前都会先清空缓存
       flushCacheIfRequired(ms);
       if (ms.isUseCache() && resultHandler == null) {
         ensureNoOutParams(ms, boundSql);
         @SuppressWarnings("unchecked")
+        // 尝试获取缓存值
         List<E> list = (List<E>) tcm.getObject(cache, key);
         if (list == null) {
+          //未命中缓存，调用真正的Executor去查询数据库
           list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+          //结果放入缓存
           tcm.putObject(cache, key, list); // issue #578 and #116
         }
         return list;
       }
     }
+    //未配置使用缓存 直接调用真正的Executor去查询数据库
     return delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
   }
 

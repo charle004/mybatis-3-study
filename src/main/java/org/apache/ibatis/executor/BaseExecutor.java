@@ -55,6 +55,10 @@ public abstract class BaseExecutor implements Executor {
   protected Executor wrapper;
 
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
+
+
+  //这是Mybatis的一级缓存对象
+  //由于Executor是伴随SqlSession的创建而创建，因此Mybatis的一级缓存是SqlSession级别的
   protected PerpetualCache localCache;
   protected PerpetualCache localOutputParameterCache;
   protected Configuration configuration;
@@ -151,10 +155,12 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
+      //尝试获取缓存值
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
       if (list != null) {
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
       } else {
+        //缓存没命中，查库
         list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
       }
     } finally {
@@ -168,6 +174,7 @@ public abstract class BaseExecutor implements Executor {
       deferredLoads.clear();
       if (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) {
         // issue #482
+        //缓存的级别，默认是缓存是一个SqlSession的生命周期，如果设置成 STATEMENT 每一个 STATEMENT 执行完毕都会清空缓存
         clearLocalCache();
       }
     }
@@ -194,6 +201,8 @@ public abstract class BaseExecutor implements Executor {
     }
   }
 
+  //创建缓存的Key 通过对对象求Hash计算得来的
+  //对 Mapper的 类名+方法、参数、SQL、环境名 计算hash后的唯一名
   @Override
   public CacheKey createCacheKey(MappedStatement ms, Object parameterObject, RowBounds rowBounds, BoundSql boundSql) {
     if (closed) {
@@ -337,6 +346,7 @@ public abstract class BaseExecutor implements Executor {
     } finally {
       localCache.removeObject(key);
     }
+    //查询结果放入缓存
     localCache.putObject(key, list);
     if (ms.getStatementType() == StatementType.CALLABLE) {
       localOutputParameterCache.putObject(key, parameter);

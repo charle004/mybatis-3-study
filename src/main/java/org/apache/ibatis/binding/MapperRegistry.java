@@ -30,6 +30,10 @@ import org.apache.ibatis.session.SqlSession;
  * @author Clinton Begin
  * @author Eduardo Macarron
  * @author Lasse Voss
+ *
+ * 在构建 Configuration对象的时候
+ * 存储 Mapper接口 和 对应的XML文件的映射
+ *
  */
 public class MapperRegistry {
 

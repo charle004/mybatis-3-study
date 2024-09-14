@@ -31,6 +31,12 @@ import org.apache.ibatis.session.RowBounds;
 
 /**
  * @author Clinton Begin
+ *
+ * 委托者模式的利用
+ * RoutingStatementHandler 根据 StatementType 选择创建 SimpleStatementHandler 、PreparedStatementHandler 、CallableStatementHandler三者其一
+ *
+ * Mybatis默认的 StatementType 都是 PREPARED，可以通过全局配置配置默认的StatementType 或者 通过xml语句中的 statementType  属性指定
+ *
  */
 public class RoutingStatementHandler implements StatementHandler {
 

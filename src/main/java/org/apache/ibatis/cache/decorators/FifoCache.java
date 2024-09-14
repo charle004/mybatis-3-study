@@ -22,11 +22,13 @@ import org.apache.ibatis.cache.Cache;
 
 /**
  * FIFO (first in, first out) cache decorator.
+ * 装饰器模式 对 delegate 对象进行增强 实现 FIFO的缓存实现
  *
  * @author Clinton Begin
  */
 public class FifoCache implements Cache {
 
+  //组合进了另一个 Cache 对象
   private final Cache delegate;
   private final Deque<Object> keyList;
   private int size;

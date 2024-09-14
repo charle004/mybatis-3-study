@@ -15,5 +15,9 @@
  */
 /**
  * Base package for logging.
+ *
+ * Mybatis的日志配置
+ * todo 熟悉各类Java的日志框架和适配
+ *
  */
 package org.apache.ibatis.logging;

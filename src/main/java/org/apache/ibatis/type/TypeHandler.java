@@ -22,6 +22,11 @@ import java.sql.SQLException;
 
 /**
  * @author Clinton Begin
+ *
+ *
+ *  Type handlers 用于实现 Java 类型 和 JDBC类型的转化，
+ *   包括执行SQL时的参数设置 和 获取ResultSet结果的值获取
+ *
  */
 public interface TypeHandler<T> {
 

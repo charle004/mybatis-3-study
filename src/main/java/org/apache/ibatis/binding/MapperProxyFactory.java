@@ -45,6 +45,10 @@ public class MapperProxyFactory<T> {
 
   @SuppressWarnings("unchecked")
   protected T newInstance(MapperProxy<T> mapperProxy) {
+    //JDK动态代理的构建的核心代码
+    //参数1：被代理者 类加载器
+    //参数2：被代理者 即 Mapper接口
+    //参数3：被代理者 即 Mapper接口 方法执行的代理逻辑 （实现了 InvocationHandler接口  的对象）
     return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[] { mapperInterface }, mapperProxy);
   }
 

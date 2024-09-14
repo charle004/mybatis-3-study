@@ -19,6 +19,8 @@ import org.apache.ibatis.reflection.MetaObject;
 
 /**
  * @author Clinton Begin
+ * ObjectWrapper的创建工厂
+ *
  */
 public interface ObjectWrapperFactory {
 

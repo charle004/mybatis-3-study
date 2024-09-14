@@ -43,9 +43,12 @@ import org.apache.ibatis.session.SqlSession;
  * @author Eduardo Macarron
  * @author Lasse Voss
  * @author Kazuki Shimizu
+ *
+ * 对应Mapper接口的一个方法， 提供该方法执行的入口
  */
 public class MapperMethod {
 
+  //Mapper接口方法对应的SQL命令
   private final SqlCommand command;
   private final MethodSignature method;
 
@@ -54,6 +57,7 @@ public class MapperMethod {
     this.method = new MethodSignature(config, mapperInterface, method);
   }
 
+  //触发执行SQL的方法
   public Object execute(SqlSession sqlSession, Object[] args) {
     Object result;
     switch (command.getType()) {
@@ -214,6 +218,7 @@ public class MapperMethod {
 
   }
 
+  //Mapper接口方法对应的SQL命令
   public static class SqlCommand {
 
     private final String name;
@@ -249,6 +254,7 @@ public class MapperMethod {
 
     private MappedStatement resolveMappedStatement(Class<?> mapperInterface, String methodName, Class<?> declaringClass,
         Configuration configuration) {
+      // 构建 statementId 根据 statementId 取 Configuration对象中查找对应的SQL语句
       String statementId = mapperInterface.getName() + "." + methodName;
       if (configuration.hasStatement(statementId)) {
         return configuration.getMappedStatement(statementId);

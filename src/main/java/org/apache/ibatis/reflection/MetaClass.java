@@ -28,6 +28,7 @@ import org.apache.ibatis.reflection.property.PropertyTokenizer;
 
 /**
  * @author Clinton Begin
+ * 针对元信息的封装，用于实现属性的查找、get/set的获取和执行等
  */
 public class MetaClass {
 

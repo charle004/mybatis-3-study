@@ -81,6 +81,7 @@ public class DefaultParameterHandler implements ParameterHandler {
             }
             value = metaObject.getValue(propertyName);
           }
+          //这里获取XML中配置的 parameterType
           TypeHandler typeHandler = parameterMapping.getTypeHandler();
           JdbcType jdbcType = parameterMapping.getJdbcType();
           if (value == null && jdbcType == null) {

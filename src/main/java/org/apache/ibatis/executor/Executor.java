@@ -29,6 +29,10 @@ import org.apache.ibatis.transaction.Transaction;
 
 /**
  * @author Clinton Begin
+ *
+ * Mybatis中的 Executor 是用于 执行 Statement的
+ *
+ *
  */
 public interface Executor {
 

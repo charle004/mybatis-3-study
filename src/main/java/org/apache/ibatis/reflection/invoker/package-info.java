@@ -16,4 +16,8 @@
 /**
  * Unused.
  */
+/**
+ * package-info.java 用于对整个包提供概述和解释。
+ * 也可以添加某个注解，相当于为整个包中的类添加该注解
+ */
 package org.apache.ibatis.reflection.invoker;

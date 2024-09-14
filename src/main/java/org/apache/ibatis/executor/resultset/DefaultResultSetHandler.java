@@ -192,6 +192,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
+    //对ResultSet对象的包装，主要获取 ResultSet中的字段、字段的Jdbc类型以及对应的Java类型
     ResultSetWrapper rsw = getFirstResultSet(stmt);
 
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();

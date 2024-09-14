@@ -22,6 +22,7 @@ import org.apache.ibatis.reflection.Reflector;
 
 /**
  * @author Clinton Begin
+ * 用于执行 元信息Method对应的方法
  */
 public class MethodInvoker implements Invoker {
 
@@ -31,6 +32,7 @@ public class MethodInvoker implements Invoker {
   public MethodInvoker(Method method) {
     this.method = method;
 
+    //todo 这里没明白
     if (method.getParameterTypes().length == 1) {
       type = method.getParameterTypes()[0];
     } else {
@@ -43,6 +45,7 @@ public class MethodInvoker implements Invoker {
     try {
       return method.invoke(target, args);
     } catch (IllegalAccessException e) {
+      //私有方法执行时会抛无非法访问异常，在判断当前Java环境允许利用反射访问私有方法时，再去执行
       if (Reflector.canControlMemberAccessible()) {
         method.setAccessible(true);
         return method.invoke(target, args);

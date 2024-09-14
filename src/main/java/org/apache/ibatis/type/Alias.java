@@ -34,6 +34,11 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * @author Clinton Begin
+ *
+ * 类型别名注解
+ * 比如：UserEmail 实体类标识了注解 @Alias("ue") ,那么在XML中的 ResultHandle/ parameterType 就可以不写UserEmail的类路径而直接写别名 ue
+ *
+ *
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

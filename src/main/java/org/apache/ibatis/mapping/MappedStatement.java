@@ -30,6 +30,9 @@ import org.apache.ibatis.session.Configuration;
 
 /**
  * @author Clinton Begin
+ *
+ * XML中一个Statement 对应的所有属性
+ *
  */
 public final class MappedStatement {
 

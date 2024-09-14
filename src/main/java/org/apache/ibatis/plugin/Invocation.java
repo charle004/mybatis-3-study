@@ -27,6 +27,7 @@ import org.apache.ibatis.executor.statement.StatementHandler;
 
 /**
  * @author Clinton Begin
+ * 对代理拦截方法(invoke方法)参数的封装 ，并限制插件代理的对象
  */
 public class Invocation {
 

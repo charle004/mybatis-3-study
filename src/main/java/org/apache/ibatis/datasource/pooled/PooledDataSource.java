@@ -49,8 +49,8 @@ public class PooledDataSource implements DataSource {
   private final UnpooledDataSource dataSource;
 
   // OPTIONAL CONFIGURATION FIELDS
-  protected int poolMaximumActiveConnections = 10;
-  protected int poolMaximumIdleConnections = 5;
+  protected int poolMaximumActiveConnections = 10; //最大活跃连接数
+  protected int poolMaximumIdleConnections = 5; //最大空闲连接数
   protected int poolMaximumCheckoutTime = 20000;
   protected int poolTimeToWait = 20000;
   protected int poolMaximumLocalBadConnectionTolerance = 3;
@@ -443,22 +443,27 @@ public class PooledDataSource implements DataSource {
       try {
         if (!state.idleConnections.isEmpty()) {
           // Pool has available connection
+          //空闲连接List不为空 直接获取并从List中移除
           conn = state.idleConnections.remove(0);
           if (log.isDebugEnabled()) {
             log.debug("Checked out connection " + conn.getRealHashCode() + " from pool.");
           }
         } else if (state.activeConnections.size() < poolMaximumActiveConnections) {
           // Pool does not have available connection and can create a new connection
+          //活跃连接数小于最大活跃连接数，直接创建
           conn = new PooledConnection(dataSource.getConnection(), this);
           if (log.isDebugEnabled()) {
             log.debug("Created connection " + conn.getRealHashCode() + ".");
           }
         } else {
           // Cannot create new connection
+          //活跃连接数达到最大活跃连接数，无法创建连接
           PooledConnection oldestActiveConnection = state.activeConnections.get(0);
           long longestCheckoutTime = oldestActiveConnection.getCheckoutTime();
+          //取出最早的活跃连接，判断 checkout时间是否超出 最大checkout时间 即判断该连接是否应该失效
           if (longestCheckoutTime > poolMaximumCheckoutTime) {
             // Can claim overdue connection
+            //超出最大checkout时间，连接过期，删除该连接
             state.claimedOverdueConnectionCount++;
             state.accumulatedCheckoutTimeOfOverdueConnections += longestCheckoutTime;
             state.accumulatedCheckoutTime += longestCheckoutTime;
@@ -476,6 +481,7 @@ public class PooledDataSource implements DataSource {
                 log.debug("Bad connection. Could not roll back");
               }
             }
+            //重新创建新连接
             conn = new PooledConnection(oldestActiveConnection.getRealConnection(), this);
             conn.setCreatedTimestamp(oldestActiveConnection.getCreatedTimestamp());
             conn.setLastUsedTimestamp(oldestActiveConnection.getLastUsedTimestamp());
@@ -485,6 +491,8 @@ public class PooledDataSource implements DataSource {
             }
           } else {
             // Must wait
+
+            //未超出最大checkout时间，连接未过期
             try {
               if (!countedWait) {
                 state.hadToWaitCount++;
@@ -494,6 +502,7 @@ public class PooledDataSource implements DataSource {
                 log.debug("Waiting as long as " + poolTimeToWait + " milliseconds for connection.");
               }
               long wt = System.currentTimeMillis();
+              //当前线程阻塞，等待其他线程close释放连接，放回 idleConnections 后唤醒 , 但最多阻塞 poolTimeToWait时间
               if (!condition.await(poolTimeToWait, TimeUnit.MILLISECONDS)) {
                 log.debug("Wait failed...");
               }

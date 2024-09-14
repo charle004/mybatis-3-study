@@ -21,6 +21,7 @@ import org.apache.ibatis.reflection.Reflector;
 
 /**
  * @author Clinton Begin
+ * 用于执行 元信息Method对应的Set方法
  */
 public class SetFieldInvoker implements Invoker {
   private final Field field;

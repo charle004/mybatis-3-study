@@ -30,8 +30,13 @@ import org.apache.ibatis.session.ResultHandler;
  */
 public interface StatementHandler {
 
+  //创建JDBC Statement对象
+  //1. 创建普通的 Statement 还是 PreparedStatement
+  //2. 设置statement 超时时间 即 JDBC Statement对象 setQueryTimeout
+  //3. 设置 fetchSize ( Statement 生成的 ResultSet对象需要更多行时应该从数据库获取的行数 )
   Statement prepare(Connection connection, Integer transactionTimeout) throws SQLException;
 
+  //处理SQL参数
   void parameterize(Statement statement) throws SQLException;
 
   void batch(Statement statement) throws SQLException;

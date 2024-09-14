@@ -41,13 +41,17 @@ public class Plugin implements InvocationHandler {
     this.signatureMap = signatureMap;
   }
 
+  //创建代理
   public static Object wrap(Object target, Interceptor interceptor) {
+    //获取插件上定义的 目标类和方法，并查看当前 target对象是否有命中的
     Map<Class<?>, Set<Method>> signatureMap = getSignatureMap(interceptor);
     Class<?> type = target.getClass();
     Class<?>[] interfaces = getAllInterfaces(type, signatureMap);
     if (interfaces.length > 0) {
+      //有即创建代理
       return Proxy.newProxyInstance(type.getClassLoader(), interfaces, new Plugin(target, interceptor, signatureMap));
     }
+    //没有则直接返回target
     return target;
   }
 
@@ -56,6 +60,7 @@ public class Plugin implements InvocationHandler {
     try {
       Set<Method> methods = signatureMap.get(method.getDeclaringClass());
       if (methods != null && methods.contains(method)) {
+        //插件进行拦截，执行插件的方法
         return interceptor.intercept(new Invocation(target, method, args));
       }
       return method.invoke(target, args);

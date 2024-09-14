@@ -34,6 +34,9 @@ public class IntegerTypeHandler extends BaseTypeHandler<Integer> {
   @Override
   public Integer getNullableResult(ResultSet rs, String columnName) throws SQLException {
     int result = rs.getInt(columnName);
+    // ResultSet # wasNull 方法用于检测该值是否是SQL NULL
+    //如果数据库中实际值为NULL,在数据库驱动中,getInt方法由于返回的是基本类型int, 会默认设为 0
+    //这里为了避免默认值0，加一层判断是否为 SQL NULL
     return result == 0 && rs.wasNull() ? null : result;
   }
 
